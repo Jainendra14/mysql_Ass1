@@ -1,0 +1,85 @@
+create database employees
+use employees
+
+create table EmployesDetails(
+emp_id int,
+fullname varchar(255),
+managerId int,
+Dateofjoin date,
+city varchar(255),
+primary key(emp_id)
+);
+
+create table Employesalary(
+emp_id int,
+Project varchar(255),
+salary int
+); 
+alter table  Employesalary add primary key (emp_id);
+desc table Employesalary;
+select * FROM Employesalary;
+
+insert into EmployesDetails values(1,'happy Singh',500,'2020-03-02','lucknow');
+insert into employesDetails values (2,'amit Singh',501,'2021-06-21','Ayodhya');
+insert into employesDetails values (3,'anuj pandey',502,'2020-04-22','bihar');
+insert into employesDetails values (4,'Nand Singh',503,'2022-02-09','Gonda');
+insert into employesDetails values (5,'jain Singh',504,'2020-02-01','Pilibhit');
+
+describe table employesDetails;
+
+select * from employesDetails;
+
+insert into employesalary values(1,'apple',50000);
+insert into employesalary values(2,'realme',30000);
+insert into employesalary (emp_id,salary) values(3,45000);
+insert into employesalary values(4,'sumsung',60000);
+insert into employesalary values(5,'apple',20000);
+
+
+select * from employesalary;
+
+select * from employesalary where project is null;
+select * from employesDetails left join employesalary on employesDetails.emp_id = employesalary.emp_id where project is null;
+
+-- SQL query to fetch all the Employees from EmployeeDetails who joined in the Year 2020
+Select * from employesDetails where year(Dateofjoin) ='2020';
+
+insert into employesalary (emp_id , project) values();
+update  employesalary set salary=null where emp_id=5;
+
+-- Fetch all employees from EmployeeDetails who have a salary record in EmployeeSalary.
+select * from employesDetails where exists (select * from employesalary where employesDetails.emp_id=employesalary.emp_id);
+
+-- Write an SQL query to fetch a project-wise count of employees. 
+select * ,count(project) from employesalary group by project ;
+select * , count(employesalary.project) from employesDetails left join employesalary on employesDetails.emp_id = employesalary.emp_id group by employesalary.project;
+
+
+-- Fetch employee names and salaries even if the salary value is not present for the employee.
+
+select fullname ,salary from employesDetails left join employesalary on employesDetails.emp_id = employesalary.emp_id;
+
+-- Write an SQL query to fetch all the Employees who are also managers.
+
+
+-- Write an SQL query to fetch duplicate records from EmployeeDetails.
+
+select * from employesDetails;
+
+insert into employesDetails values(6,'happy Singh',500,'2020-03-04','lucknow');
+
+select fullname , managerId, city , count(*) from employesDetails group by fullname having count(*)>1;
+
+-- Write an SQL query to fetch only odd rows from the table.
+select * ,row_number() over() as row_no from employesDetails where (row_no % 2) = 1;
+
+
+-- Write a query to find the 3rd highest salary from a table without top or limit keyword.
+select * from employesalary;
+select max(salary) from employesalary where salary < (select max(salary) from employesalary where salary <(select max(salary) from employesalary));
+
+
+
+
+
+ 
